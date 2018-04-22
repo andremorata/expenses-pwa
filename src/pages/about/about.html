@@ -1,11 +1,60 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      About
+      Sobre
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
+  <ion-card>
+    <ion-card-header color="primary">
+      <h1>
+        <ion-icon name="contact"></ion-icon> Perfil</h1>
+      <hr>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Usuário atual: {{user}}
+      </p>
+      <p>
+        <button ion-button block color="secondary" (click)="signout() ">Desconectar</button>
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <h1>
+        <ion-icon name="code-working"></ion-icon> Sobre o desenvolvedor</h1>
+      <hr>
+    </ion-card-header>
+    <ion-card-content>
+      <div col-sm-12 col-lg-3 float-left>
+        <img alt="Playmore Software" src="../../assets/icon/Icon-128.png" />
+      </div>
+      <div col-sm-12 col-lg-9 offset-lg-3>
+        <p>
+          Rua Salvador D'Onófrio, 137 - Vila Garavelo
+        </p>
+        <p>
+          Guariba, São Paulo - CEP 14.840-000
+        </p>
+        <p>
+          Fone:
+          <a href="tel:+5516991431921">+55 (16) 99143-1921</a>
+        </p>
+        <p>
+          Web:
+          <a href="http://playmore.software" target="_blank" rel="noopener">http://playmore.software</a>
+        </p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <a ion-button icon-start full color="danger" href="javascript:void(0);" (click)="forceRefresh()">
+    <ion-icon name="refresh"></ion-icon>
+    Forçar limpeza do cache do App
+  </a>
 </ion-content>

@@ -1,0 +1,160 @@
+.dark-theme {
+
+  $background-color: #222;
+  $background-color-2: #333;
+  $background-color-3: #444;
+  $background-color-4: #555;
+  $background-color-5: #666;
+  $background-color-6: #777;
+  $text-color: #fff;
+  $text-color-2: #eee;
+  $text-color-3: #aaa;
+
+  $all-black: #000;
+
+
+  ion-content {
+    background-color: $background-color;
+  }
+
+  ion-header, ion-toolbar {
+    .toolbar-background {
+      background-color: $background-color-2
+    }
+    .toolbar-title {
+      color: $text-color;
+    }
+    button, .bar-button {
+      color: $text-color !important;
+    }
+    .bar-button-default-md:hover:not(.disable-hover), .bar-button-clear-md-default:hover:not(.disable-hover), .bar-button-md-default:hover:not(.disable-hover) {
+      color: map-get($colors, 'primary')
+    }
+  }
+
+  ion-footer {
+    background-color: $background-color-2;
+    color: $text-color;
+  }
+
+  ion-card {
+    background-color: $background-color-2;
+    color: $text-color;
+
+    hr {
+      background-color: $background-color-6;
+    }
+
+    .scroll-content {
+      background-color: $background-color-2;
+      color: $text-color-2;
+    }
+
+    ion-card-header {
+      color: map-get($colors, 'primary');
+    }
+
+    ion-card-content {
+      color: $text-color-2;
+
+      p {
+        color: $text-color-2;
+      }
+    }
+  }
+
+  ion-list {
+    background-color: $background-color-2;
+    color: $text-color;
+  }
+
+  ion-list-header {
+    background-color: $background-color-2;
+    color: $text-color;
+  }
+
+  ion-item {
+    background-color: $background-color-2;
+    color: $text-color;
+
+    .item-inner {
+      border-bottom-color: $background-color-3;
+    }
+  }
+
+  ion-item-sliding {
+    background-color: $background-color;
+
+    ion-item, .item, .item-md, .item-ios, .item-wp {
+      background-color: $background-color;
+      border-bottom-color: $background-color-3;
+
+      .item-inner {
+        border-bottom-color: $background-color-3;
+      }
+    }
+  }
+
+  ion-alert {
+    .alert-wrapper, .alert-message  {
+      background-color: $background-color;
+      color: $text-color;
+      overflow-y: auto;
+    }
+  }
+
+  ion-modal {
+    .scroll-content {
+      overflow-y: auto;
+    }
+  }
+
+  .item, .item-md, .item-ios, .item-wp {
+    background-color: $background-color-2;
+    color: $text-color;
+  }
+
+  .scroll-content {
+    background-color: $background-color;
+    color: $text-color;
+  }
+
+  app-menu ion-content div.scroll-content {
+    background-color: $background-color-2;
+    color: $text-color;
+  }
+
+  app-menu ion-item[logo] {
+    background-color: $background-color-3;
+  }
+
+  .split-pane-md.split-pane-visible > .split-pane-side {
+    border-right: 1px solid $background-color-4;
+  }
+
+  .panel {
+    background-color: $background-color-2;
+    border-color: $background-color-6;
+  }
+
+  .panel-footer {
+    background-color: $background-color-3;
+  }
+
+  .alert-radio-label {
+    color: $text-color !important;
+  }
+
+  .cke_wysiwyg_frame, .cke_wysiwyg_div {
+    background-color: $background-color-2;
+  }
+
+  .text-input, .select-text, .datetime-text {
+    color: $text-color;
+  }
+
+  .toast-wrapper {
+    background-color: $all-black !important;
+  }
+
+}

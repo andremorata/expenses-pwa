@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Biosev Formulários Digitais</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="description" content="Powered by Playmore Software (http://playmore.software)">
+  <meta name="author" content="Playmore Software">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#222222">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Biosev Formulários Digitais">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/icon/icon-60.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/icon/icon-76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/icon/icon-120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/icon/icon-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/icon/icon-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/icon-180.png">
+
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="build/main.css">
+
+</head>
+
+<body>
+  <ion-app>
+    <h1>Offline :/</h1>
+    <p>Você está offline no momento e o recurso que está tentando acessar ainda não sincronizado para o seu dispositivo.</p>
+    <p>Tente se conectar a uma rede e acessar o conteúdo para que ele seja sincronizado e fique disponível também offline.</p>
+
+    <a ion-button text-center href="/">
+      Clique aqui para voltar à página inicial
+    </a>
+  </ion-app>
+
+  <script>
+    if (navigator.serviceWorker) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
+</body>
+
+</html>

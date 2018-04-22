@@ -1,16 +1,199 @@
-// http://ionicframework.com/docs/theming/
 
+button[ion-button].item-button {
+  font-size: .8em;
+  height: initial;
+  padding: 10px;
+}
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+ion-header,
+ion-footer {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+ion-footer {
+  padding: 5px;
+}
+
+ion-content {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+ion-label {
+  white-space: normal;
+}
+
+ion-input, ion-textarea, ion-select, ion-datetime {
+  color: #999999 !important;
+  border-bottom: 2px solid map-get($colors, primary);
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+ion-card-header {
+  white-space: normal;
+}
+
+ion-card-header .toolbar-background {
+  background-color: transparent;
+}
+
+ion-title > .toolbar-title{
+  white-space: normal;
+}
+
+.back-button-text-ios {
+  display: none;
+}
+
+.toolbar-title-md {
+  padding: 0 5px;
+  font-size: 1.2em;
+}
+
+.toolbar-ios ion-title {
+  padding: 0 60px 1px 45px;
+}
+
+.toolbar-title-ios {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.text-primary {
+  color: map-get($colors, primary);
+}
+
+.text-secondary {
+  color: map-get($colors, secondary);
+}
+
+.text-danger {
+  color: map-get($colors, danger);
+}
+
+.text-light {
+  color: map-get($colors, light);
+}
+
+.text-dark {
+  color: map-get($colors, dark);
+}
+
+.card-md h1, .card-md h2, .card-md h3, .card-md h4 {
+  color: map-get($colors, primary);
+}
+
+// .input-has-focus {
+//   border-bottom: 2px solid map-get($colors, primary) !important;
+// }
+
+// .input-has-focus ion-input, .input-has-focus ion-textarea, .input-has-focus ion-select {
+//   border-bottom: none;
+// }
+
+.label-md[floating] {
+  white-space: normal !important;
+}
+
+.text-input, .select-text {
+  color: #222222;
+  padding-left: 10px;
+}
+
+.datetime-text {
+  margin-left: 10px;
+  color: #222222;
+}
+
+.title {
+  font-family: 'Saira Semi Condensed', Helvetica, sans-serif
+}
+
+.large-text {
+  font-size: 3em;
+}
+
+.larger-text {
+  font-size: 9em;
+}
+
+.auto-scroll .scroll-content {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}
+
+.base-color {
+  background-color: map-get($colors, base);
+  color: map-get($colors, light);
+}
+
+.content-md {
+  background-color: $background-color;
+}
+
+.page-content {
+  margin-top: 56px;
+  margin-bottom: 35px;
+}
+
+.app-logo {
+  max-height: 50px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+ion-footer {
+  background: $background-color;
+  color: $text-color;
+}
+
+ion-footer #copyright {
+  padding-left: 10px;
+  padding-top: 5px;
+}
+
+ion-footer #logo {
+  a {
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 0.93em;
+    color: map-get($colors, pm);
+    padding-top: 3px;
+  }
+  img {
+    vertical-align: middle;
+  }
+}
+
+a {
+  color: map-get($colors, pm);
+  text-decoration: none;
+}
+
+.hide {
+  display: none;
+}
+
+.clear {
+  clear: both;
+}
+
+.list-md .item-input:last-child {
+  border-bottom: none;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.big-icon {
+  font-size: 160px !important;
+  color: #e5e6e7;
+}
+
+.icon-hover:hover {
+  color: #1ab394;
+}
+
