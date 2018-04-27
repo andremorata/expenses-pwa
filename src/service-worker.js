@@ -1,6 +1,6 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.1.0/workbox-sw.js');
 
-const CACHE_VER = 'v1.0';
+const CACHE_VER = 'v1.2';
 
 workbox.setConfig({
   debug: false

@@ -1,23 +1,117 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title text-uppercase>Controle de Contas e Pagamentos</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-  <p>Holy cow!!!</p>
+<ion-content padding class="auto-scroll">
 
-  <h1>Pagamentos: <strong style="text-align: right;">7.392,00</strong></h1>
-  <h1>Pendente: <strong>12.735,92 </strong></h1>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="Puxe para atualizar..." refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
-  <button ion-button (click)="clickMe()">Click ME NOW!</button>
+  <ion-grid fixed no-padding>
+    <ion-row justify-content-center>
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-grid>
+
+          <ion-row justify-content-center>
+            <ion-col>
+              <h1 ion-text text-uppercase color="info">Resumo Geral</h1>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-auto>
+              <h2 float-left>Pagamentos:</h2>
+            </ion-col>
+            <ion-col justify-content-end text-right>
+              <h2 ion-text color="secondary">
+                <strong>7.392,00</strong>
+              </h2>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col col-auto>
+              <h2 float-left>Contas:</h2>
+            </ion-col>
+            <ion-col justify-content-end text-right>
+              <h2 ion-text color="danger">
+                <strong>12.735,92</strong>
+              </h2>
+            </ion-col>
+          </ion-row>
+
+          <ion-row justify-content-center>
+            <ion-col>
+              <br>
+              <br>
+              <h1 ion-text text-uppercase color="info">Últimos pagamentos</h1>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col justify-content-center>
+              <ion-list no-lines>
+                <ion-item *ngFor="let payment of lastPayments">
+                  <ion-label>{{payment.description}}
+                    <br>
+                    <small>{{payment.date}}
+                      <span *ngIf="payment.installment"> - {{payment.installment}} parcelas</span>
+                    </small>
+                  </ion-label>
+                  <div item-content>
+                    {{payment.value}}
+                  </div>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+          <ion-row justify-content-center>
+            <ion-col>
+              <h1 ion-text text-uppercase color="info">Últimas contas</h1>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col justify-content-center>
+              <ion-list no-lines>
+                <ion-item *ngFor="let bill of lastBills">
+                  <ion-label>{{bill.description}}
+                    <br>
+                    <small>{{bill.date}}
+                      <span *ngIf="bill.installment"> - {{bill.installment}} parcelas</span>
+                    </small>
+                  </ion-label>
+                  <div item-content>
+                    {{bill.value}}
+                  </div>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab bottom right #fab>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="secondary" (click)="goToAddItem('bill', fab)">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>Nova conta</ion-label>
+      </button>
+      <button ion-fab color="danger" (click)="goToAddItem('payment', fab)">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>Novo pagamento</ion-label>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

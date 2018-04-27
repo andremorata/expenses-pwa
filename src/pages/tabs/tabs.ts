@@ -16,7 +16,4 @@ export class TabsPage {
   tabPayments = PaymentsPage;
   tabAbout = AboutPage;
 
-  constructor() {
-
-  }
 }
