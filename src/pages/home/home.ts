@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, FabContainer } from 'ionic-angular';
-import { AddEditItemPage } from '../add-edit-item/add-edit-item';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -28,6 +27,7 @@ export class HomePage {
       let installment = Math.floor(Math.random() * 3);
 
       this.lastBills.push({
+        type: 'bill',
         description: `Item 01234 - ${rnd}`,
         date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
         value: value,
@@ -35,6 +35,7 @@ export class HomePage {
       });
 
       this.lastPayments.push({
+        type: 'payment',
         description: `Item 01234 - ${rnd}`,
         date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
         value: value,
@@ -48,10 +49,5 @@ export class HomePage {
       this.buildItemInfo();
       refresher.complete();
     }, 2000);
-  }
-
-  goToAddItem(type, e: FabContainer) {
-    this.navCtrl.push(AddEditItemPage, { type: type });
-    e.close();
   }
 }

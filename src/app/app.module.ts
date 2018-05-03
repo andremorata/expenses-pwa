@@ -5,10 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { DateValueAccessorModule } from 'angular-date-value-accessor';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppMain } from './app.component';
 
@@ -46,9 +47,9 @@ export const environment = {
     VersionNotes
   ],
   imports: [
-    BrowserModule, ComponentsModule, IonicModule.forRoot(AppMain), HttpModule, FormsModule, ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase), AngularFireDatabaseModule, AngularFireAuthModule,
-    LoginPageModule, BillsPageModule, PaymentsPageModule, AddEditItemPageModule
+    BrowserModule, ComponentsModule, IonicModule.forRoot(AppMain), HttpModule, FormsModule, ReactiveFormsModule, TextMaskModule,
+    AngularFireModule.initializeApp(environment.firebase), AngularFireAuthModule, AngularFirestoreModule,
+    DateValueAccessorModule, LoginPageModule, BillsPageModule, PaymentsPageModule, AddEditItemPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -60,7 +61,7 @@ export const environment = {
   ],
   providers: [
     StatusBar, SplashScreen, SysVariables, Settings,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

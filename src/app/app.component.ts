@@ -16,7 +16,7 @@ import { DataService } from '../services/data.service';
   templateUrl: 'app.html'
 })
 export class AppMain {
-  rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
   constructor(
     public platform: Platform,
@@ -27,13 +27,12 @@ export class AppMain {
     public dataSvc: DataService,
     public settings: Settings
   ) {
+    this.dataSvc.init();
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // statusBar.styleDefault();
-      // splashScreen.hide();
       this.dataSvc
         .loadConfigurationFile()
         .subscribe(result => {
