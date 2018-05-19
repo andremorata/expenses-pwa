@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController, ModalController, LoadingController, Loading, Modal } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment/locale/pt-br';
 import 'rxjs/Rx';
 
@@ -192,6 +192,11 @@ export class Utilities {
   getTime(): string {
     let dt = moment();
     return dt.format('HH:mm:ss');
+  }
+
+  parseISOString(s) {
+    var b = s.split(/\D+/);
+    return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
   }
 
   getGuid(): string {

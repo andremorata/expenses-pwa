@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Incluir {{typeString}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="auto-scroll">
+  <ion-grid fixed>
+    <ion-row align-items-center justify-content-center>
+      <ion-col col-12 col-sm-12 col-md-6>
+        <form [formGroup]="form">
+          <ion-list no-lines>
+            <ion-item>
+              <ion-label floating>Descrição</ion-label>
+              <ion-input #description type="text" formControlName="description"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Data</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>Valor</ion-label>
+              <ion-input type="tel" [textMask]="{mask: numMask}" (ionFocus)='cleanNumber($event)'
+                (ionBlur)="cleanNumber($event)" formControlName="value"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                Parcelas
+                <ion-badge color="danger">{{form.value.installment}}</ion-badge>
+              </ion-label>
+              <ion-range min="0" max="24" snaps="true" formControlName="installment"></ion-range>
+            </ion-item>
+          </ion-list>
+        </form>
+        <button ion-button block [disabled]="!form.valid" (click)="submit()">Salvar</button>
+        <button ion-button block color="light" (click)="cancel()">Cancelar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

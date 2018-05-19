@@ -1,25 +1,48 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the PaymentsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Utilities } from '../../services/utils.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { DataService } from '../../services/data.service';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 @IonicPage()
 @Component({
   selector: 'page-payments',
   templateUrl: 'payments.html',
+  providers: [Utilities, DataService]
 })
 export class PaymentsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: Observable<any[]>;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public aft: AngularFirestore,
+    public utils: Utilities,
+    public data: DataService
+  ) {
+    registerLocaleData(localePt, 'pt');
+    let loader = utils.showLoading();
+    data.getPayments(9999)
+      .then(data => {
+        this.items = data;
+        loader.dismiss();
+      })
+      .catch(err => {
+        loader.dismiss();
+        utils.alert('Erro ao recuperar as contas', 'Erro');
+        console.error('Erro ao recuperar as contas', err);
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PaymentsPage');
+  getDate(val: number) {
+    return new Date(val * 1000);
   }
+
+  // ionViewDidLoad() { }
 
 }
