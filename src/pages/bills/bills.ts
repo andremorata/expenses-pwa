@@ -26,10 +26,20 @@ export class BillsPage {
     public data: DataService
   ) {
     registerLocaleData(localePt, 'pt');
-    this.items = data.getBills();
+    let loader = utils.showLoading();
+    data.getBills(9999)
+      .then(data => {
+        this.items = data;
+        loader.dismiss();
+      })
+      .catch(err => {
+        loader.dismiss();
+        utils.alert('Erro ao recuperar as contas', 'Erro');
+        console.error('Erro ao recuperar as contas', err);
+      });
   }
 
-  public getDate(val) {
+  getDate(val:number) {
     return new Date(val * 1000);
   }
 

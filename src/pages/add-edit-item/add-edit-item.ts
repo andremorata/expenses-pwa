@@ -101,15 +101,37 @@ export class AddEditItemPage {
   }
 
   submit() {
-
-    let loader = this.utils.showLoading();
-
-    this.data.addBill({
+    let dt = {
       description: this.form.value.description,
       date: this.utils.parseISOString(this.form.value.date),
       value: parseFloat(this.form.value.value),
       installment: parseInt(this.form.value.installment, 10),
-    })
+    };
+
+    if (this.type === 'bill')
+      this.addBill(dt);
+    else
+      this.addPayment(dt);
+  }
+
+  addBill(data) {
+    let loader = this.utils.showLoading();
+    this.data.addBill(data)
+      .then(() => {
+        loader.dismiss();
+        this.utils.toast('Salvo com sucesso!');
+        this.navCtrl.popToRoot();
+      })
+      .catch((err) => {
+        loader.dismiss();
+        this.utils.alert(`Falha ao salvar as informações.`, 'Erro');
+        console.log('Erro ao salvar', err);
+      });
+  }
+
+  addPayment(data) {
+    let loader = this.utils.showLoading();
+    this.data.addPayment(data)
       .then(() => {
         loader.dismiss();
         this.utils.toast('Salvo com sucesso!');

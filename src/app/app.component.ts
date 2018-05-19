@@ -27,11 +27,11 @@ export class AppMain {
     public dataSvc: DataService,
     public settings: Settings
   ) {
-    this.dataSvc.init();
     this.initializeApp();
   }
 
-  initializeApp() {
+  async initializeApp() {
+    await this.dataSvc.init();
     this.platform.ready().then(() => {
       this.dataSvc
         .loadConfigurationFile()

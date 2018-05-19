@@ -14,7 +14,10 @@
             <ion-label>{{bill.description}}
               <br>
               <small>{{ getDate(bill.date.seconds) | date:'dd/MM/yyyy HH:mm' }}
-                <span *ngIf="bill.installment"> - {{bill.installment}} parcelas</span>
+                <span *ngIf="bill.installment">
+                   - em {{bill.installment}} de
+                   {{bill.value / bill.installment | number:'1.2-2':'pt'}}
+                </span>
               </small>
             </ion-label>
             <div item-content>

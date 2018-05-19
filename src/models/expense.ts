@@ -1,6 +1,5 @@
 
 export class Expense {
-  type: string;
   user: string;
   description: string;
   date: any;

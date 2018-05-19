@@ -28,7 +28,7 @@
             </ion-col>
             <ion-col justify-content-end text-right>
               <h2 ion-text color="secondary">
-                <strong>7.792,00</strong>
+                <strong>{{totalPayments | number:'1.2-2':'pt'}}</strong>
               </h2>
             </ion-col>
           </ion-row>
@@ -39,14 +39,13 @@
             </ion-col>
             <ion-col justify-content-end text-right>
               <h2 ion-text color="danger">
-                <strong>12.735,92</strong>
+                <strong>{{totalBills | number:'1.2-2':'pt'}}</strong>
               </h2>
             </ion-col>
           </ion-row>
 
           <ion-row justify-content-center>
             <ion-col>
-              <br>
               <br>
               <h1 ion-text text-uppercase color="info">Últimos pagamentos</h1>
             </ion-col>
@@ -55,17 +54,19 @@
           <ion-row>
             <ion-col justify-content-center>
               <ion-list no-lines>
-                <ion-item *ngFor="let payment of lastPayments">
-                  <ion-label>{{payment.description}}
-                    <br>
-                    <small>{{payment.date}}
-                      <span *ngIf="payment.installment"> - {{payment.installment}} parcelas</span>
-                    </small>
-                  </ion-label>
-                  <div item-content>
-                    {{payment.value}}
-                  </div>
-                </ion-item>
+                  <ion-item *ngFor="let payment of lastPayments | async">
+                      <ion-label>{{payment.description}}
+                        <br>
+                        <small>{{ getDate(payment.date.seconds) | date:'dd/MM/yyyy HH:mm' }}
+                          <span *ngIf="payment.installment">
+                            - em {{payment.installment}} de {{payment.value / payment.installment | number:'1.2-2':'pt'}}
+                          </span>
+                        </small>
+                      </ion-label>
+                      <div item-content>
+                        {{payment.value | number:'1.2-2':'pt'}}
+                      </div>
+                    </ion-item>
               </ion-list>
             </ion-col>
           </ion-row>
@@ -79,15 +80,17 @@
           <ion-row>
             <ion-col justify-content-center>
               <ion-list no-lines>
-                <ion-item *ngFor="let bill of lastBills">
+                <ion-item *ngFor="let bill of lastBills | async">
                   <ion-label>{{bill.description}}
                     <br>
-                    <small>{{bill.date}}
-                      <span *ngIf="bill.installment"> - {{bill.installment}} parcelas</span>
+                    <small>{{ getDate(bill.date.seconds) | date:'dd/MM/yyyy HH:mm' }}
+                      <span *ngIf="bill.installment">
+                        - em {{bill.installment}} de {{bill.value / bill.installment | number:'1.2-2':'pt'}}
+                      </span>
                     </small>
                   </ion-label>
                   <div item-content>
-                    {{bill.value}}
+                    {{bill.value | number:'1.2-2':'pt'}}
                   </div>
                 </ion-item>
               </ion-list>

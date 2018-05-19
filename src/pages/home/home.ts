@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { Utilities } from '../../services/utils.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { DataService } from '../../services/data.service';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { Expense } from '../../models/expense';
 
 @Component({
   selector: 'page-home',
@@ -7,47 +15,59 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  lastPayments: any[] = new Array();
-  lastBills: any[] = new Array();
+  lastPayments: Observable<any[]>;
+  lastBills: Observable<any[]>;
+  totalBills: number = 0.0;
+  totalPayments: number = 0.0;
 
-  constructor(public navCtrl: NavController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public aft: AngularFirestore,
+    public utils: Utilities,
+    public data: DataService
+  ) {
     document.querySelector('body').classList.remove('dark-theme');
-
+    registerLocaleData(localePt, 'pt');
     this.buildItemInfo();
   }
 
-  buildItemInfo() {
-    this.lastBills = [];
-    this.lastPayments = [];
+  async buildItemInfo() {
+    let loader = this.utils.showLoading();
+    this.lastBills = await this.data.getBills(3);
+    this.lastPayments = await this.data.getPayments(3);
+    await this.getBillsTotal();
+    await this.getPaymentsTotal();
+    this.totalBills = this.totalBills - this.totalPayments;
+    loader.dismiss();
+  }
 
-    for (let i = 0; i < 3; i++) {
-      let rnd = Math.floor(Math.random() * 200) + 1;
-      let value = (rnd + 937.5).toFixed(2);
-      let date = new Date(+(new Date()) - Math.floor(Math.random() * 10000000000));
-      let installment = Math.floor(Math.random() * 3);
+  async getBillsTotal() {
+    this.totalBills = 0.0;
+    await this.data
+      .getBills(9999)
+      .then(vals => vals
+        .flatMap(Expense => Expense)
+        .subscribe(x => this.totalBills += (<Expense>x).value));
+  }
 
-      this.lastBills.push({
-        type: 'bill',
-        description: `Item 01234 - ${rnd}`,
-        date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-        value: value,
-        installment: installment >= 2 ? installment : null
-      });
+  async getPaymentsTotal() {
+    this.totalPayments = 0.0;
+    await this.data
+      .getPayments(9999)
+      .then(vals => vals
+        .flatMap(list => list)
+        .subscribe(x => this.totalBills += (<Expense>x).value));
+  }
 
-      this.lastPayments.push({
-        type: 'payment',
-        description: `Item 01234 - ${rnd}`,
-        date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-        value: value,
-        installment: installment >= 2 ? installment : null
-      });
-    }
+  getDate(val: number) {
+    return new Date(val * 1000);
   }
 
   doRefresh(refresher) {
     setTimeout(() => {
       this.buildItemInfo();
       refresher.complete();
-    }, 2000);
+    }, 1000);
   }
 }
