@@ -7,6 +7,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { DataService } from '../../services/data.service';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { AddEditItemPage } from '../add-edit-item/add-edit-item';
 
 @IonicPage()
 @Component({
@@ -43,8 +44,14 @@ export class BillsPage {
     return new Date(val * 1000);
   }
 
-  ionViewDidLoad() {
-    // console.log('ionViewDidLoad BillsPage');
+  async delete(bill) {
+    this.utils.confirm('Deseja realmente excluir este item?', 'Excluir Conta', async () => {
+      await this.data.deleteBill(bill);
+    });
+  }
+
+  async edit(bill) {
+    this.navCtrl.push(AddEditItemPage, { type: 'bill', data: bill });
   }
 
 }

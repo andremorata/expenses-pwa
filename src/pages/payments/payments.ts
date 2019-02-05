@@ -7,6 +7,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { DataService } from '../../services/data.service';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { AddEditItemPage } from '../add-edit-item/add-edit-item';
 
 @IonicPage()
 @Component({
@@ -34,8 +35,8 @@ export class PaymentsPage {
       })
       .catch(err => {
         loader.dismiss();
-        utils.alert('Erro ao recuperar as contas', 'Erro');
-        console.error('Erro ao recuperar as contas', err);
+        utils.alert('Erro ao recuperar os pagamentos', 'Erro');
+        console.error('Erro ao recuperar os pagamentos', err);
       });
   }
 
@@ -43,6 +44,14 @@ export class PaymentsPage {
     return new Date(val * 1000);
   }
 
-  // ionViewDidLoad() { }
+  async delete(payment) {
+    this.utils.confirm('Deseja realmente excluir este item?', 'Excluir Pagamento', async () => {
+      await this.data.deletePayment(payment);
+    });
+  }
+
+  async edit(payment) {
+    this.navCtrl.push(AddEditItemPage, { type: 'payment', data: payment });
+  }
 
 }
