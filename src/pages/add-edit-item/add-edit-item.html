@@ -33,6 +33,12 @@
         </form>
         <button ion-button block [disabled]="!form.valid" (click)="submit()">Salvar</button>
         <button ion-button block color="light" (click)="cancel()">Cancelar</button>
+        <hr>
+        <ion-list no-lines *ngIf="editItem">
+            <ion-item>
+              <small>Criado por: {{form.value.user}}<br>em {{ form.value.created | date:'dd/MM/yyyy HH:mm' }}</small>
+            </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>

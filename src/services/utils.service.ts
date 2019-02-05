@@ -189,6 +189,10 @@ export class Utilities {
     }
   }
 
+  convertDate(seconds:number) {
+    return new Date(seconds * 1000);
+  }
+
   getTime(): string {
     let dt = moment();
     return dt.format('HH:mm:ss');

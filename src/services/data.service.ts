@@ -68,6 +68,7 @@ export class DataService {
 
   async addBill(data: any) {
     let inputData = {
+      id: this.db.createId(),
       user: this.user,
       description: data.description,
       date: data.date,
@@ -77,9 +78,9 @@ export class DataService {
     };
 
     return await this.db.collection('bills')
-      .add(inputData)
+      .doc(inputData.id)
+      .set(inputData)
       .then(docRef => {
-        data.id = docRef.id;
         console.log('Salvo com sucesso!', data.id);
       })
       .catch(err => {
@@ -87,7 +88,7 @@ export class DataService {
       });
   }
 
-  editBill(data: any) {
+  async editBill(data: any) {
     let inputData = {
       user: this.user,
       description: data.description,
@@ -100,8 +101,17 @@ export class DataService {
     return this.db.collection('bills').doc(data.id).set(inputData, { merge: true });
   }
 
+  async deleteBill(item: any) {
+    if (item.id) {
+      return await this.delete('b', item);
+    } else {
+      throw 'Id não existe no objeto';
+    }
+  }
+
   async addPayment(data: any) {
     let inputData = {
+      id: this.db.createId(),
       user: this.user,
       description: data.description,
       date: data.date,
@@ -111,9 +121,9 @@ export class DataService {
     };
 
     return await this.db.collection('payments')
-      .add(inputData)
+      .doc(inputData.id)
+      .set(inputData)
       .then(docRef => {
-        data.id = docRef.id;
         console.log('Salvo com sucesso!', data.id);
       })
       .catch(err => {
@@ -121,4 +131,36 @@ export class DataService {
       });
   }
 
+  async editPayment(data: any) {
+    let inputData = {
+      user: this.user,
+      description: data.description,
+      date: data.date,
+      value: data.value,
+      installment: data.installment,
+      created: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    return this.db.collection('payments').doc(data.id).set(inputData, { merge: true });
+  }
+
+  async deletePayment(item: any) {
+    if (item.id) {
+      return await this.delete('p', item);
+    } else {
+      throw 'Id não existe no objeto';
+    }
+  }
+
+  private async delete(type: string, item: any) {
+    return await this.db.collection(type === 'b' ? 'bills' : 'payments')
+      .doc(item.id)
+      .delete()
+      .then(() => {
+        console.log('Removido com sucesso!', item.id);
+      })
+      .catch(err => {
+        console.error('Error deleting document: ', err);
+      });
+  }
 }

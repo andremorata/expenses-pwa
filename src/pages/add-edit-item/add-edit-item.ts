@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Utilities } from '../../services/utils.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
+import { Expense } from '../../models/expense';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,7 @@ import { DataService } from '../../services/data.service';
 export class AddEditItemPage {
   @ViewChild('description') descriptionInput;
 
+  public editItem: Expense;
   public type: string;
   public typeString: string;
   public form: FormGroup;
@@ -38,16 +40,14 @@ export class AddEditItemPage {
     this.numMask = this.utils.createNumberMask(this.numMaskDef);
 
     this.type = this.navParams.get('type');
+    this.editItem = this.navParams.get('data');
+
     if (this.type) {
       this.typeString = this.type === 'bill' ? 'Conta' : 'Pagamento';
     }
 
     this.form = this.fb.group({
-      type: [this.type, Validators.compose([
-        Validators.minLength(3),
-        Validators.maxLength(60),
-        Validators.required
-      ])],
+      id: [''],
       description: ['', Validators.compose([
         Validators.minLength(3),
         Validators.maxLength(150),
@@ -63,14 +63,24 @@ export class AddEditItemPage {
       installment: [1, Validators.compose([
         Validators.min(1),
         Validators.required
-      ])]
+      ])],
+      created: [''],
+      user: [''],
     });
   }
 
   ionViewDidLoad() {
-    setTimeout(() => {
-      this.descriptionInput.setFocus();
-    }, 1000);
+    if (this.editItem) {
+      this.form.setValue({
+        id: this.editItem.id,
+        description: this.editItem.description,
+        date: this.getDate(this.editItem.date.seconds).toISOString(),
+        value: this.editItem.value.toFixed(2).replace(',','').replace('.',','),
+        installment: this.editItem.installment,
+        created: this.utils.convertDate(this.editItem.created.seconds),
+        user: this.editItem.user
+      });
+    }
   }
 
   cleanNumber(e) {
@@ -102,16 +112,28 @@ export class AddEditItemPage {
 
   submit() {
     let dt = {
+      id: this.form.value.id,
       description: this.form.value.description,
       date: this.utils.parseISOString(this.form.value.date),
-      value: parseFloat(this.form.value.value),
+      value: parseFloat(this.form.value.value.toString().replace('.','').replace(',','.')),
       installment: parseInt(this.form.value.installment, 10),
     };
 
-    if (this.type === 'bill')
-      this.addBill(dt);
-    else
-      this.addPayment(dt);
+    if (this.type === 'bill') {
+      if (this.editItem)
+        this.editBill(dt);
+      else
+        this.addBill(dt);
+    } else {
+      if (this.editItem)
+        this.editPayment(dt);
+      else
+        this.addPayment(dt);
+    }
+  }
+
+  getDate(seconds:number) {
+    return new Date(seconds * 1000);
   }
 
   addBill(data) {
@@ -132,6 +154,36 @@ export class AddEditItemPage {
   addPayment(data) {
     let loader = this.utils.showLoading();
     this.data.addPayment(data)
+      .then(() => {
+        loader.dismiss();
+        this.utils.toast('Salvo com sucesso!');
+        this.navCtrl.popToRoot();
+      })
+      .catch((err) => {
+        loader.dismiss();
+        this.utils.alert(`Falha ao salvar as informações.`, 'Erro');
+        console.log('Erro ao salvar', err);
+      });
+  }
+
+  editBill(data) {
+    let loader = this.utils.showLoading();
+    this.data.editBill(data)
+      .then(() => {
+        loader.dismiss();
+        this.utils.toast('Salvo com sucesso!');
+        this.navCtrl.popToRoot();
+      })
+      .catch((err) => {
+        loader.dismiss();
+        this.utils.alert(`Falha ao salvar as informações.`, 'Erro');
+        console.log('Erro ao salvar', err);
+      });
+  }
+
+  editPayment(data) {
+    let loader = this.utils.showLoading();
+    this.data.editPayment(data)
       .then(() => {
         loader.dismiss();
         this.utils.toast('Salvo com sucesso!');
